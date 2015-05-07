@@ -71,14 +71,14 @@ apt_package_check_list=(
 
 	# other packages that come in handy
 	imagemagick
-	subversion
-	git-core
+#	subversion
+#	git-core
 	zip
 	unzip
 	ngrep
 	curl
 	make
-	vim
+#	vim
 	colordiff
 	postfix
 
@@ -89,7 +89,7 @@ apt_package_check_list=(
 	gettext
 
 	# Req'd for Webgrind
-	graphviz
+#	graphviz
 
 	# dos2unix
 	# Allows conversion of DOS style line endings to something we'll have less
@@ -183,7 +183,7 @@ if [[ $ping_result == "Connected" ]]; then
 	# XDebug 2.2.3 is provided with the Ubuntu install by default. The PECL
 	# installation allows us to use a later version. Not specifying a version
 	# will load the latest stable.
-	pecl install xdebug
+#	pecl install xdebug
 
 	# ack-grep
 	#
@@ -199,32 +199,32 @@ if [[ $ping_result == "Connected" ]]; then
 	# COMPOSER
 	#
 	# Install Composer if it is not yet available.
-	if [[ ! -n "$(composer --version --no-ansi | grep 'Composer version')" ]]; then
-		echo "Installing Composer..."
-		curl -sS https://getcomposer.org/installer | php
-		chmod +x composer.phar
-		mv composer.phar /usr/local/bin/composer
-	fi
+#	if [[ ! -n "$(composer --version --no-ansi | grep 'Composer version')" ]]; then
+#		echo "Installing Composer..."
+#		curl -sS https://getcomposer.org/installer | php
+#		chmod +x composer.phar
+#		mv composer.phar /usr/local/bin/composer
+#	fi
 
 	# Update both Composer and any global packages. Updates to Composer are direct from
 	# the master branch on its GitHub repository.
-	if [[ -n "$(composer --version --no-ansi | grep 'Composer version')" ]]; then
-		echo "Updating Composer..."
-		COMPOSER_HOME=/usr/local/src/composer composer self-update
+#	if [[ -n "$(composer --version --no-ansi | grep 'Composer version')" ]]; then
+#		echo "Updating Composer..."
+#		COMPOSER_HOME=/usr/local/src/composer composer self-update
 #		COMPOSER_HOME=/usr/local/src/composer composer -q global require --no-update phpunit/phpunit:4.3.*
 #		COMPOSER_HOME=/usr/local/src/composer composer -q global require --no-update phpunit/php-invoker:1.1.*
 #		COMPOSER_HOME=/usr/local/src/composer composer -q global require --no-update mockery/mockery:0.9.*
 #		COMPOSER_HOME=/usr/local/src/composer composer -q global require --no-update d11wtq/boris:v1.0.8
-		COMPOSER_HOME=/usr/local/src/composer composer -q global config bin-dir /usr/local/bin
-		COMPOSER_HOME=/usr/local/src/composer composer global update
-	fi
+#		COMPOSER_HOME=/usr/local/src/composer composer -q global config bin-dir /usr/local/bin
+#		COMPOSER_HOME=/usr/local/src/composer composer global update
+#	fi
 
 	# Graphviz
 	#
 	# Set up a symlink between the Graphviz path defined in the default Webgrind
 	# config and actual path.
-	echo "Adding graphviz symlink for Webgrind..."
-	ln -sf /usr/bin/dot /usr/local/bin/dot
+#	echo "Adding graphviz symlink for Webgrind..."
+#	ln -sf /usr/bin/dot /usr/local/bin/dot
 
 else
 	echo -e "\nNo network connection available, skipping package installation"
@@ -269,8 +269,8 @@ echo " * Rsync'd /srv/config/nginx-config/sites/              to /etc/nginx/cust
 cp /srv/config/php5-fpm-config/php5-fpm.conf /etc/php5/fpm/php5-fpm.conf
 cp /srv/config/php5-fpm-config/www.conf /etc/php5/fpm/pool.d/www.conf
 cp /srv/config/php5-fpm-config/php-custom.ini /etc/php5/fpm/conf.d/php-custom.ini
-cp /srv/config/php5-fpm-config/opcache.ini /etc/php5/fpm/conf.d/opcache.ini
-cp /srv/config/php5-fpm-config/xdebug.ini /etc/php5/mods-available/xdebug.ini
+#cp /srv/config/php5-fpm-config/opcache.ini /etc/php5/fpm/conf.d/opcache.ini
+#cp /srv/config/php5-fpm-config/xdebug.ini /etc/php5/mods-available/xdebug.ini
 
 # Find the path to Xdebug and prepend it to xdebug.ini
 XDEBUG_PATH=$( find /usr -name 'xdebug.so' | head -1 )
@@ -279,8 +279,8 @@ sed -i "1izend_extension=\"$XDEBUG_PATH\"" /etc/php5/mods-available/xdebug.ini
 echo " * Copied /srv/config/php5-fpm-config/php5-fpm.conf     to /etc/php5/fpm/php5-fpm.conf"
 echo " * Copied /srv/config/php5-fpm-config/www.conf          to /etc/php5/fpm/pool.d/www.conf"
 echo " * Copied /srv/config/php5-fpm-config/php-custom.ini    to /etc/php5/fpm/conf.d/php-custom.ini"
-echo " * Copied /srv/config/php5-fpm-config/opcache.ini       to /etc/php5/fpm/conf.d/opcache.ini"
-echo " * Copied /srv/config/php5-fpm-config/xdebug.ini        to /etc/php5/mods-available/xdebug.ini"
+#echo " * Copied /srv/config/php5-fpm-config/opcache.ini       to /etc/php5/fpm/conf.d/opcache.ini"
+#echo " * Copied /srv/config/php5-fpm-config/xdebug.ini        to /etc/php5/mods-available/xdebug.ini"
 
 # Copy memcached configuration from local
 cp /srv/config/memcached-config/memcached.conf /etc/memcached.conf
@@ -290,19 +290,19 @@ echo " * Copied /srv/config/memcached-config/memcached.conf   to /etc/memcached.
 # Copy custom dotfiles and bin file for the vagrant user from local
 cp /srv/config/bash_profile /home/vagrant/.bash_profile
 cp /srv/config/bash_aliases /home/vagrant/.bash_aliases
-cp /srv/config/vimrc /home/vagrant/.vimrc
-if [[ ! -d /home/vagrant/.subversion ]]; then
-	mkdir /home/vagrant/.subversion
-fi
-cp /srv/config/subversion-servers /home/vagrant/.subversion/servers
-if [[ ! -d /home/vagrant/bin ]]; then
-	mkdir /home/vagrant/bin
-fi
+#cp /srv/config/vimrc /home/vagrant/.vimrc
+#if [[ ! -d /home/vagrant/.subversion ]]; then
+#	mkdir /home/vagrant/.subversion
+#fi
+#cp /srv/config/subversion-servers /home/vagrant/.subversion/servers
+#if [[ ! -d /home/vagrant/bin ]]; then
+#	mkdir /home/vagrant/bin
+#fi
 rsync -rvzh --delete /srv/config/homebin/ /home/vagrant/bin/
 
 echo " * Copied /srv/config/bash_profile                      to /home/vagrant/.bash_profile"
 echo " * Copied /srv/config/bash_aliases                      to /home/vagrant/.bash_aliases"
-echo " * Copied /srv/config/vimrc                             to /home/vagrant/.vimrc"
+#echo " * Copied /srv/config/vimrc                             to /home/vagrant/.vimrc"
 #echo " * Copied /srv/config/subversion-servers                to /home/vagrant/.subversion/servers"
 echo " * rsync'd /srv/config/homebin                          to /home/vagrant/bin"
 
@@ -320,7 +320,7 @@ service nginx restart
 service memcached restart
 
 # Disable PHP Xdebug module by default
-php5dismod xdebug
+#php5dismod xdebug
 
 # Enable PHP mcrypt module by default
 php5enmod mcrypt
@@ -423,14 +423,14 @@ if [[ $ping_result == "Connected" ]]; then
 
 	# Webgrind install (for viewing callgrind/cachegrind files produced by
 	# xdebug profiler)
-	if [[ ! -d /srv/www/default/webgrind ]]; then
-		echo -e "\nDownloading webgrind, see https://github.com/jokkedk/webgrind"
-		git clone https://github.com/jokkedk/webgrind.git /srv/www/default/webgrind
-	else
-		echo -e "\nUpdating webgrind..."
-		cd /srv/www/default/webgrind
-		git pull --rebase origin master
-	fi
+#	if [[ ! -d /srv/www/default/webgrind ]]; then
+#		echo -e "\nDownloading webgrind, see https://github.com/jokkedk/webgrind"
+#		git clone https://github.com/jokkedk/webgrind.git /srv/www/default/webgrind
+#	else
+#		echo -e "\nUpdating webgrind..."
+#		cd /srv/www/default/webgrind
+#		git pull --rebase origin master
+#	fi
 
 	# PHP_CodeSniffer (for running WordPress-Coding-Standards)
 #	if [[ ! -d /srv/www/phpcs ]]; then
