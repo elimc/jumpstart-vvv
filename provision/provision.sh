@@ -447,7 +447,7 @@ if [[ $ping_result == "Connected" ]]; then
 	fi
 
 	# Sniffs WordPress Coding Standards
-	xw
+	if [[ ! -d /srv/www/phpcs/CodeSniffer/Standards/WordPress ]]; then
 		echo -e "\nDownloading WordPress-Coding-Standards, sniffs for PHP_CodeSniffer, see https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards"
 		git clone -b master https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git /srv/www/phpcs/CodeSniffer/Standards/WordPress
 	else
