@@ -71,14 +71,11 @@ apt_package_check_list=(
 
 	# other packages that come in handy
 	imagemagick
-#	subversion
-#	git-core
 	zip
 	unzip
 	ngrep
 	curl
 	make
-#	vim
 	colordiff
 	postfix
 
@@ -87,9 +84,6 @@ apt_package_check_list=(
 
 	# Req'd for i18n tools
 	gettext
-
-	# Req'd for Webgrind
-#	graphviz
 
 	# dos2unix
 	# Allows conversion of DOS style line endings to something we'll have less
@@ -269,41 +263,18 @@ echo " * Rsync'd /srv/config/nginx-config/sites/              to /etc/nginx/cust
 cp /srv/config/php5-fpm-config/php5-fpm.conf /etc/php5/fpm/php5-fpm.conf
 cp /srv/config/php5-fpm-config/www.conf /etc/php5/fpm/pool.d/www.conf
 cp /srv/config/php5-fpm-config/php-custom.ini /etc/php5/fpm/conf.d/php-custom.ini
-#cp /srv/config/php5-fpm-config/opcache.ini /etc/php5/fpm/conf.d/opcache.ini
-#cp /srv/config/php5-fpm-config/xdebug.ini /etc/php5/mods-available/xdebug.ini
-
-# Find the path to Xdebug and prepend it to xdebug.ini
-XDEBUG_PATH=$( find /usr -name 'xdebug.so' | head -1 )
-sed -i "1izend_extension=\"$XDEBUG_PATH\"" /etc/php5/mods-available/xdebug.ini
 
 echo " * Copied /srv/config/php5-fpm-config/php5-fpm.conf     to /etc/php5/fpm/php5-fpm.conf"
 echo " * Copied /srv/config/php5-fpm-config/www.conf          to /etc/php5/fpm/pool.d/www.conf"
 echo " * Copied /srv/config/php5-fpm-config/php-custom.ini    to /etc/php5/fpm/conf.d/php-custom.ini"
-#echo " * Copied /srv/config/php5-fpm-config/opcache.ini       to /etc/php5/fpm/conf.d/opcache.ini"
-#echo " * Copied /srv/config/php5-fpm-config/xdebug.ini        to /etc/php5/mods-available/xdebug.ini"
-
-# Copy memcached configuration from local
-cp /srv/config/memcached-config/memcached.conf /etc/memcached.conf
-
-echo " * Copied /srv/config/memcached-config/memcached.conf   to /etc/memcached.conf"
 
 # Copy custom dotfiles and bin file for the vagrant user from local
 cp /srv/config/bash_profile /home/vagrant/.bash_profile
 cp /srv/config/bash_aliases /home/vagrant/.bash_aliases
-#cp /srv/config/vimrc /home/vagrant/.vimrc
-#if [[ ! -d /home/vagrant/.subversion ]]; then
-#	mkdir /home/vagrant/.subversion
-#fi
-#cp /srv/config/subversion-servers /home/vagrant/.subversion/servers
-#if [[ ! -d /home/vagrant/bin ]]; then
-#	mkdir /home/vagrant/bin
-#fi
 rsync -rvzh --delete /srv/config/homebin/ /home/vagrant/bin/
 
 echo " * Copied /srv/config/bash_profile                      to /home/vagrant/.bash_profile"
 echo " * Copied /srv/config/bash_aliases                      to /home/vagrant/.bash_aliases"
-#echo " * Copied /srv/config/vimrc                             to /home/vagrant/.vimrc"
-#echo " * Copied /srv/config/subversion-servers                to /home/vagrant/.subversion/servers"
 echo " * rsync'd /srv/config/homebin                          to /home/vagrant/bin"
 
 # If a bash_prompt file exists in the VVV config/ directory, copy to the VM.
@@ -317,7 +288,6 @@ fi
 # Make sure the services we expect to be running are running.
 echo -e "\nRestart services..."
 service nginx restart
-service memcached restart
 
 # Disable PHP Xdebug module by default
 #php5dismod xdebug
@@ -382,87 +352,11 @@ fi
 
 if [[ $ping_result == "Connected" ]]; then
 	# WP-CLI Install
-	if [[ ! -d /srv/www/wp-cli ]]; then
-		echo -e "\nDownloading wp-cli, see http://wp-cli.org"
-		git clone https://github.com/wp-cli/wp-cli.git /srv/www/wp-cli
-		cd /srv/www/wp-cli
-#		composer install
-	else
-		echo -e "\nUpdating wp-cli..."
-		cd /srv/www/wp-cli
-		git pull --rebase origin master
-#		composer update
-	fi
-	# Link `wp` to the `/usr/local/bin` directory
-	ln -sf /srv/www/wp-cli/bin/wp /usr/local/bin/wp
-
-	# Download and extract phpMemcachedAdmin to provide a dashboard view and
-	# admin interface to the goings on of memcached when running
-#	if [[ ! -d /srv/www/default/memcached-admin ]]; then
-#		echo -e "\nDownloading phpMemcachedAdmin, see https://code.google.com/p/phpmemcacheadmin/"
-#		cd /srv/www/default
-#		wget -q -O phpmemcachedadmin.tar.gz 'https://phpmemcacheadmin.googlecode.com/files/phpMemcachedAdmin-1.2.2-r262.tar.gz'
-#		mkdir memcached-admin
-#		tar -xf phpmemcachedadmin.tar.gz --directory memcached-admin
-#		rm phpmemcachedadmin.tar.gz
-#	else
-#		echo "phpMemcachedAdmin already installed."
-#	fi
-
-	# Checkout Opcache Status to provide a dashboard for viewing statistics
-	# about PHP's built in opcache.
-#	if [[ ! -d /srv/www/default/opcache-status ]]; then
-#		echo -e "\nDownloading Opcache Status, see https://github.com/rlerdorf/opcache-status/"
-#		cd /srv/www/default
-#		git clone https://github.com/rlerdorf/opcache-status.git opcache-status
-#	else
-#		echo -e "\nUpdating Opcache Status"
-#		cd /srv/www/default/opcache-status
-#		git pull --rebase origin master
-#	fi
-
-	# Webgrind install (for viewing callgrind/cachegrind files produced by
-	# xdebug profiler)
-#	if [[ ! -d /srv/www/default/webgrind ]]; then
-#		echo -e "\nDownloading webgrind, see https://github.com/jokkedk/webgrind"
-#		git clone https://github.com/jokkedk/webgrind.git /srv/www/default/webgrind
-#	else
-#		echo -e "\nUpdating webgrind..."
-#		cd /srv/www/default/webgrind
-#		git pull --rebase origin master
-#	fi
-
-	# PHP_CodeSniffer (for running WordPress-Coding-Standards)
-#	if [[ ! -d /srv/www/phpcs ]]; then
-#		echo -e "\nDownloading PHP_CodeSniffer (phpcs), see https://github.com/squizlabs/PHP_CodeSniffer"
-#		git clone -b master https://github.com/squizlabs/PHP_CodeSniffer.git /srv/www/phpcs
-#	else
-#		cd /srv/www/phpcs
-#		if [[ $(git rev-parse --abbrev-ref HEAD) == 'master' ]]; then
-#			echo -e "\nUpdating PHP_CodeSniffer (phpcs)..."
-#			git pull --no-edit origin master
-#		else
-#			echo -e "\nSkipped updating PHP_CodeSniffer since not on master branch"
-#		fi
-#	fi
-
-	# Sniffs WordPress Coding Standards
-#	if [[ ! -d /srv/www/phpcs/CodeSniffer/Standards/WordPress ]]; then
-#		echo -e "\nDownloading WordPress-Coding-Standards, sniffs for PHP_CodeSniffer, see https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards"
-#		git clone -b master https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git /srv/www/phpcs/CodeSniffer/Standards/WordPress
-#	else
-#		cd /srv/www/phpcs/CodeSniffer/Standards/WordPress
-#		if [[ $(git rev-parse --abbrev-ref HEAD) == 'master' ]]; then
-#			echo -e "\nUpdating PHP_CodeSniffer WordPress Coding Standards..."
-#			git pull --no-edit origin master
-#		else
-#			echo -e "\nSkipped updating PHPCS WordPress Coding Standards since not on master branch"
-#		fi
-#	fi
-	# Install the standards in PHPCS
-#	/srv/www/phpcs/scripts/phpcs --config-set installed_paths ./CodeSniffer/Standards/WordPress/
-#	/srv/www/phpcs/scripts/phpcs --config-set default_standard WordPress-Core
-#	/srv/www/phpcs/scripts/phpcs -i
+    echo -e "\nDownloading wp-cli, see http://wp-cli.org"
+    cd /home/vagrant
+    curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+    chmod +x wp-cli.phar
+    sudo mv wp-cli.phar /usr/local/bin/wp
 
 	# Install and configure the latest stable version of WordPress
 	if [[ ! -d /srv/www/wordpress-default ]]; then
