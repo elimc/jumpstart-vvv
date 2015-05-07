@@ -66,3 +66,6 @@ nbdist/
 nbactions.xml
 nb-configuration.xml
 .nb-gradle/
+nbproject/
+nbproject/*
+nbproject/**/*
