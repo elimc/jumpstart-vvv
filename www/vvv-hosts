@@ -9,6 +9,6 @@
 # of the www/ directory.
 vvv.dev
 local.wordpress.dev
-local.wordpress-trunk.dev
-src.wordpress-develop.dev
-build.wordpress-develop.dev
+#local.wordpress-trunk.dev
+#src.wordpress-develop.dev
+#build.wordpress-develop.dev

@@ -211,10 +211,10 @@ if [[ $ping_result == "Connected" ]]; then
 	if [[ -n "$(composer --version --no-ansi | grep 'Composer version')" ]]; then
 		echo "Updating Composer..."
 		COMPOSER_HOME=/usr/local/src/composer composer self-update
-		COMPOSER_HOME=/usr/local/src/composer composer -q global require --no-update phpunit/phpunit:4.3.*
-		COMPOSER_HOME=/usr/local/src/composer composer -q global require --no-update phpunit/php-invoker:1.1.*
-		COMPOSER_HOME=/usr/local/src/composer composer -q global require --no-update mockery/mockery:0.9.*
-		COMPOSER_HOME=/usr/local/src/composer composer -q global require --no-update d11wtq/boris:v1.0.8
+#		COMPOSER_HOME=/usr/local/src/composer composer -q global require --no-update phpunit/phpunit:4.3.*
+#		COMPOSER_HOME=/usr/local/src/composer composer -q global require --no-update phpunit/php-invoker:1.1.*
+#		COMPOSER_HOME=/usr/local/src/composer composer -q global require --no-update mockery/mockery:0.9.*
+#		COMPOSER_HOME=/usr/local/src/composer composer -q global require --no-update d11wtq/boris:v1.0.8
 		COMPOSER_HOME=/usr/local/src/composer composer -q global config bin-dir /usr/local/bin
 		COMPOSER_HOME=/usr/local/src/composer composer global update
 	fi
@@ -303,7 +303,7 @@ rsync -rvzh --delete /srv/config/homebin/ /home/vagrant/bin/
 echo " * Copied /srv/config/bash_profile                      to /home/vagrant/.bash_profile"
 echo " * Copied /srv/config/bash_aliases                      to /home/vagrant/.bash_aliases"
 echo " * Copied /srv/config/vimrc                             to /home/vagrant/.vimrc"
-echo " * Copied /srv/config/subversion-servers                to /home/vagrant/.subversion/servers"
+#echo " * Copied /srv/config/subversion-servers                to /home/vagrant/.subversion/servers"
 echo " * rsync'd /srv/config/homebin                          to /home/vagrant/bin"
 
 # If a bash_prompt file exists in the VVV config/ directory, copy to the VM.
@@ -433,36 +433,36 @@ if [[ $ping_result == "Connected" ]]; then
 	fi
 
 	# PHP_CodeSniffer (for running WordPress-Coding-Standards)
-	if [[ ! -d /srv/www/phpcs ]]; then
-		echo -e "\nDownloading PHP_CodeSniffer (phpcs), see https://github.com/squizlabs/PHP_CodeSniffer"
-		git clone -b master https://github.com/squizlabs/PHP_CodeSniffer.git /srv/www/phpcs
-	else
-		cd /srv/www/phpcs
-		if [[ $(git rev-parse --abbrev-ref HEAD) == 'master' ]]; then
-			echo -e "\nUpdating PHP_CodeSniffer (phpcs)..."
-			git pull --no-edit origin master
-		else
-			echo -e "\nSkipped updating PHP_CodeSniffer since not on master branch"
-		fi
-	fi
+#	if [[ ! -d /srv/www/phpcs ]]; then
+#		echo -e "\nDownloading PHP_CodeSniffer (phpcs), see https://github.com/squizlabs/PHP_CodeSniffer"
+#		git clone -b master https://github.com/squizlabs/PHP_CodeSniffer.git /srv/www/phpcs
+#	else
+#		cd /srv/www/phpcs
+#		if [[ $(git rev-parse --abbrev-ref HEAD) == 'master' ]]; then
+#			echo -e "\nUpdating PHP_CodeSniffer (phpcs)..."
+#			git pull --no-edit origin master
+#		else
+#			echo -e "\nSkipped updating PHP_CodeSniffer since not on master branch"
+#		fi
+#	fi
 
 	# Sniffs WordPress Coding Standards
-	if [[ ! -d /srv/www/phpcs/CodeSniffer/Standards/WordPress ]]; then
-		echo -e "\nDownloading WordPress-Coding-Standards, sniffs for PHP_CodeSniffer, see https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards"
-		git clone -b master https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git /srv/www/phpcs/CodeSniffer/Standards/WordPress
-	else
-		cd /srv/www/phpcs/CodeSniffer/Standards/WordPress
-		if [[ $(git rev-parse --abbrev-ref HEAD) == 'master' ]]; then
-			echo -e "\nUpdating PHP_CodeSniffer WordPress Coding Standards..."
-			git pull --no-edit origin master
-		else
-			echo -e "\nSkipped updating PHPCS WordPress Coding Standards since not on master branch"
-		fi
-	fi
+#	if [[ ! -d /srv/www/phpcs/CodeSniffer/Standards/WordPress ]]; then
+#		echo -e "\nDownloading WordPress-Coding-Standards, sniffs for PHP_CodeSniffer, see https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards"
+#		git clone -b master https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git /srv/www/phpcs/CodeSniffer/Standards/WordPress
+#	else
+#		cd /srv/www/phpcs/CodeSniffer/Standards/WordPress
+#		if [[ $(git rev-parse --abbrev-ref HEAD) == 'master' ]]; then
+#			echo -e "\nUpdating PHP_CodeSniffer WordPress Coding Standards..."
+#			git pull --no-edit origin master
+#		else
+#			echo -e "\nSkipped updating PHPCS WordPress Coding Standards since not on master branch"
+#		fi
+#	fi
 	# Install the standards in PHPCS
-	/srv/www/phpcs/scripts/phpcs --config-set installed_paths ./CodeSniffer/Standards/WordPress/
-	/srv/www/phpcs/scripts/phpcs --config-set default_standard WordPress-Core
-	/srv/www/phpcs/scripts/phpcs -i
+#	/srv/www/phpcs/scripts/phpcs --config-set installed_paths ./CodeSniffer/Standards/WordPress/
+#	/srv/www/phpcs/scripts/phpcs --config-set default_standard WordPress-Core
+#	/srv/www/phpcs/scripts/phpcs -i
 
 	# Install and configure the latest stable version of WordPress
 	if [[ ! -d /srv/www/wordpress-default ]]; then
