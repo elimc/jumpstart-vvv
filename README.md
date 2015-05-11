@@ -1,21 +1,23 @@
-# jumpstart VVV (JVVV)
+# jumpstart VVV (jVVV)
 
 jumpstart VVV is an open source configuration that is built to load the [jumpstart theme](https://github.com/elimc/jumpstart) for WordPress. For those who feel a VM is overkill for setting up the jumpstart theme, you may be interested in checking out the [jumpstart install script](https://github.com/elimc/jumpstart-install-script).
 
 ## Overview
+#### Latest Verstion: **0.1 Beta** (May 11, 2015)
+
 #### Why jumpstart VVV?
 
 Imagine you are in a team of WordPress developers. You are want to use the sweet [jumpstart theme](https://github.com/elimc/jumpstart), but you don't want to have to spend five hourse making sure the other developers have the exact same install base as you do. Besides, do you really want to explain the ins and outs of Gulp, SASS, Node, Bourbon, and Foundation with the other members of your team? Should the other members of your team even have to know this crap, just to get a WordPress install running? Of course not. Enter jumpstart VVV.
 
-**JVVV** is a massive install script that sets up WordPress in a Virtual Machine. You can have every member of your team download and run **JVVV**, and you guarantee that everyone will be on the same environment.
+**jVVV** is a massive install script that sets up WordPress in a Virtual Machine. You can have every member of your team download and run **jVVV**, and you guarantee that everyone will be on the same environment.
 
 #### Birth of jumpstart VVV
 
-**JVVV** is based on the excellent [Varying Vagrant Vagrants](https://github.com/Varying-Vagrant-Vagrants/VVV)(or VVV). It has been streamlined to load faster, because it is specifically built for [jumpstart theme](https://github.com/elimc/jumpstart), with all other coding cruft removed.
+**jVVV** is based on the excellent [Varying Vagrant Vagrants](https://github.com/Varying-Vagrant-Vagrants/VVV)(or VVV). It is specifically built for [jumpstart theme](https://github.com/elimc/jumpstart), with all other coding cruft removed. It will load much faster than Varying Vagrant Vagrants. Installing the jumpstart theme is incredibly easy, and the [jumpstart install script](https://github.com/elimc/jumpstart-install-script) is bundled with **jVVV** to abstract away the complexity of setting up Gulp, SASS, and all associated plugins.
 
 #### Software Requirements
 
-**JVVV** requires recent versions of both Vagrant and VirtualBox to be installed.
+**jVVV** requires recent versions of both Vagrant and VirtualBox to be installed.
 
 [Vagrant](http://www.vagrantup.com) is a "tool for building and distributing development environments". It works with [virtualization](https://en.wikipedia.org/wiki/X86_virtualization) software such as [VirtualBox](https://www.virtualbox.org/) to provide a virtual machine sandboxed from your local environment.
 
@@ -74,12 +76,12 @@ Now that you're up and running, start poking around and modifying things.
 The network configuration picks an IP of 192.168.50.4. It could cause conflicts on your existing network if you *are* on a 192.168.50.x subnet already. You can configure any IP address in the `Vagrantfile` and it will be used on the next `vagrant up`
 
 VVV relies on the stability of both Vagrant and Virtualbox. These caveats are common to Vagrant environments and are worth noting:
-* If the directory VVV is inside of is moved once provisioned (`vagrant-local`), it may break.
+* If the directory **jVVV** is inside of is moved once provisioned (`vagrant-local`), it may break.
     * If `vagrant destroy` is used before moving, this should be fine.
-* If Virtualbox is uninstalled, VVV will break.
-* If Vagrant is uninstalled, VVV will break.
+* If Virtualbox is uninstalled, **jVVV** will break.
+* If Vagrant is uninstalled, **jVVV** will break.
 
-The default memory allotment for the VVV virtual machine is 1024MB. If you would like to raise or lower this value to better match your system requirements, a [guide to changing memory size](https://github.com/Varying-Vagrant-Vagrants/VVV/wiki/Customising-your-Vagrant's-attributes-and-parameters) is in the wiki.
+The default memory allotment for the **jVVV** virtual machine is 1024MB. If you would like to raise or lower this value to better match your system requirements, a [guide to changing memory size](https://github.com/Varying-Vagrant-Vagrants/VVV/wiki/Customising-your-Vagrant's-attributes-and-parameters) is in the wiki.
 
 ### Credentials and Such
 
@@ -103,26 +105,20 @@ All WordPress admin usernames and passwords for WordPress installations included
 A bunch of stuff!
 
 1. [Ubuntu](http://www.ubuntu.com/) 14.04 LTS (Trusty Tahr)
-1. [WordPress Stable](https://wordpress.org/)
+1. [jumpstart theme](https://github.com/elimc/jumpstart)
+1. Customized dashboard located at [http://vvv.dev/](http://vvv.dev/)
 1. [WP-CLI](http://wp-cli.org/)
 1. [nginx](http://nginx.org/) 1.6.x
 1. [mysql](https://www.mysql.com/) 5.5.x
 1. [php-fpm](http://php-fpm.org/) 5.5.x
 1. [memcached](http://memcached.org/) 1.4.13
 1. PHP [memcache extension](https://pecl.php.net/package/memcache/3.0.8/) 3.0.8
-1. PHP [xdebug extension](https://pecl.php.net/package/xdebug/2.2.5/) 2.2.5
-1. PHP [imagick extension](https://pecl.php.net/package/imagick/3.1.2/) 3.1.2
-1. [PHPUnit](https://phpunit.de/) 4.0.x
 1. [ack-grep](http://beyondgrep.com/) 2.04
 1. [git](http://git-scm.com/) 1.9.x
-1. [subversion](https://subversion.apache.org/) 1.8.x
 1. [ngrep](http://ngrep.sourceforge.net/usage.html)
 1. [dos2unix](http://dos2unix.sourceforge.net/)
-1. [Composer](https://github.com/composer/composer)
 1. [phpMemcachedAdmin](https://code.google.com/p/phpmemcacheadmin/)
 1. [phpMyAdmin](http://www.phpmyadmin.net/) 4.1.14 (multi-language)
-1. [Opcache Status](https://github.com/rlerdorf/opcache-status)
-1. [Webgrind](https://github.com/jokkedk/webgrind)
 1. [NodeJs](https://nodejs.org/) Current Stable Version
 
 ### The Future of jumpstart VVV

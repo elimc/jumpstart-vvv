@@ -358,32 +358,138 @@ if [[ $ping_result == "Connected" ]]; then
     chmod +x wp-cli.phar
     sudo mv wp-cli.phar /usr/local/bin/wp
 
-	# Install and configure the latest stable version of WordPress
-	if [[ ! -d /srv/www/wordpress-default ]]; then
-		echo "Downloading WordPress Stable, see http://wordpress.org/"
-		cd /srv/www/
-		curl -L -O https://wordpress.org/latest.tar.gz
-		tar -xvf latest.tar.gz
-		mv wordpress wordpress-default
-		rm latest.tar.gz
-		cd /srv/www/wordpress-default
-		echo "Configuring WordPress Stable..."
-		wp core config --dbname=wordpress_default --dbuser=wp --dbpass=wp --quiet --extra-php <<PHP
-// Match any requests made via xip.io.
-if ( isset( \$_SERVER['HTTP_HOST'] ) && preg_match('/^(local.wordpress.)\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(.xip.io)\z/', \$_SERVER['HTTP_HOST'] ) ) {
-	define( 'WP_HOME', 'http://' . \$_SERVER['HTTP_HOST'] );
-	define( 'WP_SITEURL', 'http://' . \$_SERVER['HTTP_HOST'] );
-}
+    echo "Would you like to install WordPress with the jumpstart theme? (y/n)"
+    read -e yesno
+    
+    # Install WordPress
+    if [ "$yesno" == y ] ; then
 
-define( 'WP_DEBUG', true );
-PHP
-		echo "Installing WordPress Stable..."
-		wp core install --url=local.wordpress.dev --quiet --title="Local WordPress Dev" --admin_name=admin --admin_email="admin@local.dev" --admin_password="password"
-	else
-		echo "Updating WordPress Stable..."
-		cd /srv/www/wordpress-default
-		wp core upgrade
-	fi
+        # Set the variables ...
+        echo "Beginning installation of the jumpstart theme..."
+        cd /srv/www/
+        mkdir wordpress-default
+        cd wordpress-default
+        sitename="Local WordPress Dev"
+        wpuser="admin"
+        pass="password"
+        admin_email="admin@local.dev"
+        echo "Add a comma separated list of pages that you want in your site:"
+        read -e allpages
+        dbname="wordpress_default"
+        dbname="wp"
+        dbpass="wp"
+
+        # download the WordPress core files
+        wp core download
+        
+        # create the wp-config file with our standard setup
+        wp core config --dbname=$dbname --dbuser=$dbuser --dbpass=mysql --extra-php <<PHP
+        define( 'WP_DEBUG', true );
+        define( 'DISALLOW_FILE_EDIT', true );
+        PHP
+
+        # parse the current directory name
+        #currentdirectory=${PWD##*/}
+        
+        # generate random 12 character password
+        password=$(LC_CTYPE=C tr -dc A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)-+= < /dev/urandom | head -c 12)
+
+        # copy password to clipboard
+        echo $password | pbcopy
+
+        # create database, and install WordPress
+        wp db create
+        wp core install --url="http://local.wordpress.dev" --title="$sitename" --admin_user="$wpuser" --admin_password="$pass" --admin_email="$admin_email"
+
+        # discourage search engines
+        wp option update blog_public 0
+
+        # delete sample page, and create homepage
+        wp post delete $(wp post list --post_type=page --posts_per_page=1 --post_status=publish --pagename="sample-page" --field=ID --format=ids)
+        wp post create --post_type=page --post_title=Home --post_status=publish --post_author=$(wp user get $wpuser --field=ID --format=ids)
+
+        # set homepage as front page
+        wp option update show_on_front 'page'
+
+        # set homepage to be the new page
+        wp option update page_on_front $(wp post list --post_type=page --post_status=publish --posts_per_page=1 --pagename=home --field=ID --format=ids)
+
+        # create all of the pages
+        export IFS=","
+        for page in $allpages; do
+            wp post create --post_type=page --post_status=publish --post_author=$(wp user get $wpuser --field=ID --format=ids) --post_title="$(echo $page | sed -e 's/^ *//' -e 's/ *$//')"
+        done
+
+        # Delete sample post
+        wp post delete 1 --force
+
+        # set pretty urls
+        wp rewrite structure '/%postname%/'
+        wp rewrite flush
+
+        # delete hello dolly
+        wp plugin delete hello
+
+        # Install jetpack
+        wp plugin install jetpack
+
+        # Install jumpstart theme from a remote zip file
+        wp theme install https://github.com/elimc/jumpstart/archive/master.zip --activate
+
+        # create a navigation bar
+        wp menu create "Main Navigation"
+
+        # add pages to navigation
+        export IFS=" "
+        for pageid in $(wp post list --order="ASC" --orderby="date" --post_type=page --post_status=publish --posts_per_page=-1 --field=ID --format=ids); do
+            wp menu item add-post main-navigation $pageid
+        done
+
+        echo "Would you like to use NPM and Gulp? (y/n)"
+        read -e npmandgulp
+
+        if [ "$npmandgulp" == y ] ; then
+            # Change to the theme that contains gulpfile.js
+            cd wp-content/themes/jumpstart-master
+            echo "Changing directories to:"
+            PWD
+
+            # Install npm dependencies.
+            npm install
+            echo "Finished npm install :)"
+
+            # Set up path for Browsersync.
+            sed -i ".bak" "s#127.0.0.1/jump_start#local.wordpress.dev#" gulpfile.js; # Search and replace inside gulpfile.js for the correct URL
+            echo "Changing URL path to http://local.wordpress.dev"
+        fi
+    fi
+
+	# Install and configure the latest stable version of WordPress
+#	if [[ ! -d /srv/www/wordpress-default ]]; then
+#		echo "Downloading WordPress Stable, see http://wordpress.org/"
+#		cd /srv/www/
+#		curl -L -O https://wordpress.org/latest.tar.gz
+#		tar -xvf latest.tar.gz
+#		mv wordpress wordpress-default
+#		rm latest.tar.gz
+#		cd /srv/www/wordpress-default
+#		echo "Configuring WordPress Stable..."
+#		wp core config --dbname=wordpress_default --dbuser=wp --dbpass=wp --quiet --extra-php <<PHP
+#// Match any requests made via xip.io.
+#if ( isset( \$_SERVER['HTTP_HOST'] ) && preg_match('/^(local.wordpress.)\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(.xip.io)\z/', \$_SERVER['HTTP_HOST'] ) ) {
+#	define( 'WP_HOME', 'http://' . \$_SERVER['HTTP_HOST'] );
+#	define( 'WP_SITEURL', 'http://' . \$_SERVER['HTTP_HOST'] );
+#}
+#
+#define( 'WP_DEBUG', true );
+#PHP
+#		echo "Installing WordPress Stable..."
+#		wp core install --url=local.wordpress.dev --quiet --title="Local WordPress Dev" --admin_name=admin --admin_email="admin@local.dev" --admin_password="password"
+#	else
+#		echo "Updating WordPress Stable..."
+#		cd /srv/www/wordpress-default
+#		wp core upgrade
+#	fi
 
 	# Download phpMyAdmin
 	if [[ ! -d /srv/www/default/database-admin ]]; then
@@ -469,3 +575,8 @@ else
 fi
 echo "For further setup instructions, visit http://vvv.dev"
 
+cd /srv/www/wordpress-default/wp-content/themes/jumpstart
+echo "You are in the following directory:"
+PWD
+
+gulp
