@@ -182,13 +182,6 @@ if [[ $ping_result == "Connected" ]]; then
 	npm install -g npm
 	npm install -g npm-check-updates
 
-	# xdebug
-	#
-	# XDebug 2.2.3 is provided with the Ubuntu install by default. The PECL
-	# installation allows us to use a later version. Not specifying a version
-	# will load the latest stable.
-#	pecl install xdebug
-
 	# ack-grep
 	#
 	# Install ack-rep directory from the version hosted at beyondgrep.com as the
@@ -261,9 +254,6 @@ echo " * rsync'd /srv/config/homebin                          to /home/vagrant/b
 # Make sure the services we expect to be running are running.
 echo -e "\nRestart services..."
 service nginx restart
-
-# Disable PHP Xdebug module by default
-#php5dismod xdebug
 
 # Enable PHP mcrypt module by default
 php5enmod mcrypt
@@ -412,6 +402,9 @@ PHP
 #        read -e npmandgulp
 
         if [[ "$npmandgulp" == y ]]; then
+            # Install gulp globally. Makes sure "gulp" is available on CLI.
+            sudo npm install gulp -g
+
             # Change to the theme that contains gulpfile.js
             cd wp-content/themes/jumpstart-master
             echo "Changing directories to:"
