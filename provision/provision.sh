@@ -13,7 +13,7 @@ yesno="y"
 
 echo "Add a comma separated list of pages that you want in your site:"
 #read -e allpages
-allpages="page1"
+allpages="home"
 
 npmandgulp=y
 
@@ -199,37 +199,6 @@ if [[ $ping_result == "Connected" ]]; then
 		echo "Installing ack-grep as ack"
 		curl -s http://beyondgrep.com/ack-2.04-single-file > /usr/bin/ack && chmod +x /usr/bin/ack
 	fi
-
-	# COMPOSER
-	#
-	# Install Composer if it is not yet available.
-#	if [[ ! -n "$(composer --version --no-ansi | grep 'Composer version')" ]]; then
-#		echo "Installing Composer..."
-#		curl -sS https://getcomposer.org/installer | php
-#		chmod +x composer.phar
-#		mv composer.phar /usr/local/bin/composer
-#	fi
-
-	# Update both Composer and any global packages. Updates to Composer are direct from
-	# the master branch on its GitHub repository.
-#	if [[ -n "$(composer --version --no-ansi | grep 'Composer version')" ]]; then
-#		echo "Updating Composer..."
-#		COMPOSER_HOME=/usr/local/src/composer composer self-update
-#		COMPOSER_HOME=/usr/local/src/composer composer -q global require --no-update phpunit/phpunit:4.3.*
-#		COMPOSER_HOME=/usr/local/src/composer composer -q global require --no-update phpunit/php-invoker:1.1.*
-#		COMPOSER_HOME=/usr/local/src/composer composer -q global require --no-update mockery/mockery:0.9.*
-#		COMPOSER_HOME=/usr/local/src/composer composer -q global require --no-update d11wtq/boris:v1.0.8
-#		COMPOSER_HOME=/usr/local/src/composer composer -q global config bin-dir /usr/local/bin
-#		COMPOSER_HOME=/usr/local/src/composer composer global update
-#	fi
-
-	# Graphviz
-	#
-	# Set up a symlink between the Graphviz path defined in the default Webgrind
-	# config and actual path.
-#	echo "Adding graphviz symlink for Webgrind..."
-#	ln -sf /usr/bin/dot /usr/local/bin/dot
-
 else
 	echo -e "\nNo network connection available, skipping package installation"
 fi
@@ -286,12 +255,6 @@ rsync -rvzh --delete /srv/config/homebin/ /home/vagrant/bin/
 echo " * Copied /srv/config/bash_profile                      to /home/vagrant/.bash_profile"
 echo " * Copied /srv/config/bash_aliases                      to /home/vagrant/.bash_aliases"
 echo " * rsync'd /srv/config/homebin                          to /home/vagrant/bin"
-
-# If a bash_prompt file exists in the VVV config/ directory, copy to the VM.
-if [[ -f /srv/config/bash_prompt ]]; then
-	cp /srv/config/bash_prompt /home/vagrant/.bash_prompt
-	echo " * Copied /srv/config/bash_prompt                       to /home/vagrant/.bash_prompt"
-fi
 
 # RESTART SERVICES
 #
@@ -383,8 +346,6 @@ if [[ $ping_result == "Connected" ]]; then
         wpuser="admin"
         pass="password"
         admin_email="admin@local.dev"
-#        echo "Add a comma separated list of pages that you want in your site:"
-#        read -e allpages
         dbname="wordpress_default"
         dbuser="root"
         dbpass="root"
@@ -398,15 +359,6 @@ wp core config --dbname="$dbname" --dbuser="$dbuser" --dbpass="$dbpass" --extra-
 define( 'WP_DEBUG', true );
 define( 'DISALLOW_FILE_EDIT', true );
 PHP
-
-        # parse the current directory name
-        #currentdirectory=${pwd##*/}
-        
-        # generate random 12 character password
-#        password=$(LC_CTYPE=C tr -dc A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)-+= < /dev/urandom | head -c 12)
-
-        # copy password to clipboard
-#        echo $password | pbcopy
 
         # create database, and install WordPress
         #wp db create
