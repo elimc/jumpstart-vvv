@@ -575,7 +575,7 @@ else
 fi
 echo "For further setup instructions, visit http://vvv.dev"
 
-cd /srv/www/wordpress-default/wp-content/themes/jumpstart
+cd /srv/www/wordpress-default/wp-content/themes/jumpstart-master
 echo "You are in the following directory:"
 pwd
 
