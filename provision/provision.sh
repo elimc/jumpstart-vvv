@@ -392,7 +392,7 @@ if [[ $ping_result == "Connected" ]]; then
         
 # create the wp-config file with our standard setup
 # We cannot have a \t in front of any heredoc.
-wp core install --url="local.wordress.dev" --title="$sitename" --admin_user="$wpuser" --admin_password="$pass" --admin_email="$admin_email" --extra-php <<PHP
+wp core config --dbname="$dbname" --dbuser="$dbuser" --dbpass="$dbpass" --extra-php <<PHP
 define( 'WP_DEBUG', true );
 define( 'DISALLOW_FILE_EDIT', true );
 PHP
@@ -407,7 +407,7 @@ PHP
 #        echo $password | pbcopy
 
         # create database, and install WordPress
-        wp db create
+        #wp db create
         wp core install --url="http://local.wordpress.dev" --title="$sitename" --admin_user="$wpuser" --admin_password="$pass" --admin_email="$admin_email"
 
         # discourage search engines
