@@ -10,7 +10,7 @@
 -- CREATE DATABASE IF NOT EXISTS `wordpress_unit_tests`;
 -- GRANT ALL PRIVILEGES ON `wordpress_unit_tests`.* TO 'wp'@'localhost' IDENTIFIED BY 'wp';
 
--- CREATE USER 'wp'@'localhost' IDENTIFIED BY 'wp';
+CREATE USER 'wp'@'localhost' IDENTIFIED BY 'wp';
 GRANT USAGE ON *.* TO 'wp'@'localhost' IDENTIFIED BY PASSWORD 'wp';
 
 # Create an external user with privileges on all databases in mysql so
