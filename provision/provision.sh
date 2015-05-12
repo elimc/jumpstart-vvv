@@ -384,7 +384,7 @@ if [[ $ping_result == "Connected" ]]; then
 #        echo "Add a comma separated list of pages that you want in your site:"
 #        read -e allpages
         dbname="wordpress_default"
-        dbname="wp"
+        dbuser="wp"
         dbpass="wp"
 
         # download the WordPress core files
@@ -401,10 +401,10 @@ PHP
         #currentdirectory=${pwd##*/}
         
         # generate random 12 character password
-        password=$(LC_CTYPE=C tr -dc A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)-+= < /dev/urandom | head -c 12)
+#        password=$(LC_CTYPE=C tr -dc A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)-+= < /dev/urandom | head -c 12)
 
         # copy password to clipboard
-        echo $password | pbcopy
+#        echo $password | pbcopy
 
         # create database, and install WordPress
         wp db create
@@ -454,8 +454,8 @@ PHP
             wp menu item add-post main-navigation $pageid
         done
 
-        echo "Would you like to use NPM and Gulp? (y/n)"
-        read -e npmandgulp
+#        echo "Would you like to use NPM and Gulp? (y/n)"
+#        read -e npmandgulp
 
         if [[ "$npmandgulp" == y ]]; then
             # Change to the theme that contains gulpfile.js
@@ -577,6 +577,6 @@ echo "For further setup instructions, visit http://vvv.dev"
 
 cd /srv/www/wordpress-default/wp-content/themes/jumpstart
 echo "You are in the following directory:"
-PWD
+pwd
 
 gulp
