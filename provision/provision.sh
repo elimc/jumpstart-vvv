@@ -373,7 +373,7 @@ if [[ $ping_result == "Connected" ]]; then
     if [[ "$yesno" == y ]]; then
 
         # Set the variables ...
-        echo "Beginning installation of the jumpstart theme..."
+        echo "Beginning installation of the WordPress..."
         cd /srv/www/
         mkdir wordpress-default
         cd wordpress-default
@@ -566,17 +566,25 @@ while read hostfile; do
 done
 
 end_seconds="$(date +%s)"
-echo "-----------------------------"
-echo "Provisioning complete in "$(expr $end_seconds - $start_seconds)" seconds"
+echo
+echo "######################################################"
+echo "#"
+echo "# Provisioning complete in "$(expr $end_seconds - $start_seconds)" seconds"
 if [[ $ping_result == "Connected" ]]; then
-	echo "External network connection established, packages up to date."
+	echo "# External network connection established, packages up to date."
 else
-	echo "No external network available. Package installation and maintenance skipped."
+	echo "# No external network available. Package installation and maintenance skipped."
 fi
-echo "For further setup instructions, visit http://vvv.dev"
+echo "# Visit the dashboard             http://vvv.dev"
+echo "# Visit the site                  local.wordpress.dev"
+echo "#"
+echo "######################################################"
+echo 
 
 cd /srv/www/wordpress-default/wp-content/themes/jumpstart-master
 echo "You are in the following directory:"
+pwd
+echo "Changing directories to:"
 pwd
 
 gulp
