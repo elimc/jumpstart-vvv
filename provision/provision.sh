@@ -15,6 +15,8 @@ echo "Add a comma separated list of pages that you want in your site:"
 #read -e allpages
 allpages="page1"
 
+npmandgulp=y
+
 # By storing the date now, we can calculate the duration of provisioning at the
 # end of this script.
 start_seconds="$(date +%s)"
