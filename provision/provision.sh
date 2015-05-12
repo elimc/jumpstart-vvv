@@ -392,7 +392,7 @@ if [[ $ping_result == "Connected" ]]; then
         
 # create the wp-config file with our standard setup
 # We cannot have a \t in front of any heredoc.
-wp core config --dbname=$dbname --dbuser=$dbuser --dbpass=mysql --extra-php <<PHP
+wp core config --dbname=$dbname --dbuser=$dbuser --dbpass=$dbpass --extra-php <<PHP
 define( 'WP_DEBUG', true );
 define( 'DISALLOW_FILE_EDIT', true );
 PHP
