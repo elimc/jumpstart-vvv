@@ -384,15 +384,15 @@ if [[ $ping_result == "Connected" ]]; then
 #        echo "Add a comma separated list of pages that you want in your site:"
 #        read -e allpages
         dbname="wordpress_default"
-        dbuser="wp"
-        dbpass="wp"
+        dbuser="root"
+        dbpass="root"
 
         # download the WordPress core files
         wp core download
         
 # create the wp-config file with our standard setup
 # We cannot have a \t in front of any heredoc.
-wp core config --dbname=$dbname --dbuser=$dbuser --dbpass=$dbpass --extra-php <<PHP
+wp core install --url="local.wordress.dev" --title="$sitename" --admin_user="$wpuser" --admin_password="$pass" --admin_email="$admin_email" --extra-php <<PHP
 define( 'WP_DEBUG', true );
 define( 'DISALLOW_FILE_EDIT', true );
 PHP
@@ -566,7 +566,7 @@ while read hostfile; do
 done
 
 end_seconds="$(date +%s)"
-echo
+echo ""
 echo "######################################################"
 echo "#"
 echo "# Provisioning complete in "$(expr $end_seconds - $start_seconds)" seconds"
@@ -579,7 +579,7 @@ echo "# Visit the dashboard             http://vvv.dev"
 echo "# Visit the site                  local.wordpress.dev"
 echo "#"
 echo "######################################################"
-echo 
+echo ""
 
 cd /srv/www/wordpress-default/wp-content/themes/jumpstart-master
 echo "You are in the following directory:"
