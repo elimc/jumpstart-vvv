@@ -5,3 +5,44 @@
 # provisioning is finished. This allows for various scripts and configurations to
 # be available to us.
 #
+
+# Command line prompt.
+export PS1="\n\[\033[32m\]\w\[\033[1;36m\]\$(parse_git_branch)\n\[\033[33;1m\]❯ \033[0m"
+
+# Colorize the command line.
+export CLICOLOR=1
+export LSCOLORS=ExFxBxDxCxegedabagacad
+
+# User Friendly Commands.
+alias home='cd ~'
+alias unlockall='chmod -R 777 *'
+alias softlockall='chmod -R 744 *'
+alias hardlockall='chmod -R 644 *'
+alias unlock='chmod 777'
+alias softlock='chmod 744'
+alias hardlock='chmod 644'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias highlight="GREP_COLOR='1;32' grep --color=always"
+alias diff="colordiff"
+
+# Redefine a command to add options.
+alias ls='ls -GFh'
+alias ll='ls -lahG'
+alias LESS='LESS -M'
+alias gcc='gcc-4.8'
+alias df='df -h'
+alias du='du -h'
+alias type='type -a'
+
+# Safety Features.
+#alias mv='mv -i'
+alias cp='cp -i'
+#alias rm='rm -i'
+alias mkdir='mkdir -p'
+
+# Display branch name.
+parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}

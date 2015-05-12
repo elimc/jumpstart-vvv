@@ -8,10 +8,12 @@
 # configurations included with Varying Vagrant Vagrants.
 
 echo "Would you like to install WordPress with the jumpstart theme? (y/n)"
-read -e yesno
+#read -e yesno
+yesno="y"
 
 echo "Add a comma separated list of pages that you want in your site:"
-read -e allpages
+#read -e allpages
+allpages="page1"
 
 # By storing the date now, we can calculate the duration of provisioning at the
 # end of this script.
