@@ -382,11 +382,12 @@ if [[ $ping_result == "Connected" ]]; then
         # download the WordPress core files
         wp core download
         
-        # create the wp-config file with our standard setup
-        wp core config --dbname=$dbname --dbuser=$dbuser --dbpass=mysql --extra-php <<PHP
-        define( 'WP_DEBUG', true );
-        define( 'DISALLOW_FILE_EDIT', true );
-        PHP
+# create the wp-config file with our standard setup
+# We cannot have a \t in front of any heredoc.
+wp core config --dbname=$dbname --dbuser=$dbuser --dbpass=mysql --extra-php <<PHP
+define( 'WP_DEBUG', true );
+define( 'DISALLOW_FILE_EDIT', true );
+PHP
 
         # parse the current directory name
         #currentdirectory=${PWD##*/}
@@ -555,15 +556,6 @@ while read hostfile; do
 		fi
 	done < "$hostfile"
 done
-
-# Install VVV-Dashboard for an improved UI/UX
-# Dashboard located at http://vvv.dev/dashboard/index.php
-#echo "Installing VVV-Dashboard..."
-#cd www/default/
-#git clone git@github.com:leogopal/VVV-Dashboard.git VVV-Dash-Files-tmp
-#ditto VVV-Dash-Files-tmp/dashboard dashboard/
-#ditto VVV-Dash-Files-tmp/dashboard-custom.php dashboard-custom.php
-#rm -rf VVV-Dash-Files-tmp
 
 end_seconds="$(date +%s)"
 echo "-----------------------------"
