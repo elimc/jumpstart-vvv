@@ -396,7 +396,7 @@ define( 'DISALLOW_FILE_EDIT', true );
 PHP
 
         # parse the current directory name
-        #currentdirectory=${PWD##*/}
+        #currentdirectory=${pwd##*/}
         
         # generate random 12 character password
         password=$(LC_CTYPE=C tr -dc A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)-+= < /dev/urandom | head -c 12)
@@ -459,7 +459,7 @@ PHP
             # Change to the theme that contains gulpfile.js
             cd wp-content/themes/jumpstart-master
             echo "Changing directories to:"
-            PWD
+            pwd
 
             # Install npm dependencies.
             npm install
