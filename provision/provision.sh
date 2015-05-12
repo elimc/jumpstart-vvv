@@ -368,7 +368,7 @@ if [[ $ping_result == "Connected" ]]; then
 #    read -e yesno
     
     # Install WordPress
-    if [ "$yesno" == y ] ; then
+    if [[ "$yesno" == y ]]; then
 
         # Set the variables ...
         echo "Beginning installation of the jumpstart theme..."
@@ -455,7 +455,7 @@ PHP
         echo "Would you like to use NPM and Gulp? (y/n)"
         read -e npmandgulp
 
-        if [ "$npmandgulp" == y ] ; then
+        if [[ "$npmandgulp" == y ]]; then
             # Change to the theme that contains gulpfile.js
             cd wp-content/themes/jumpstart-master
             echo "Changing directories to:"
