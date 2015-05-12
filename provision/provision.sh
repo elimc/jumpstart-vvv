@@ -7,6 +7,12 @@
 # or `vagrant reload` are used. It provides all of the default packages and
 # configurations included with Varying Vagrant Vagrants.
 
+echo "Would you like to install WordPress with the jumpstart theme? (y/n)"
+read -e yesno
+
+echo "Add a comma separated list of pages that you want in your site:"
+read -e allpages
+
 # By storing the date now, we can calculate the duration of provisioning at the
 # end of this script.
 start_seconds="$(date +%s)"
@@ -358,8 +364,8 @@ if [[ $ping_result == "Connected" ]]; then
     chmod +x wp-cli.phar
     sudo mv wp-cli.phar /usr/local/bin/wp
 
-    echo "Would you like to install WordPress with the jumpstart theme? (y/n)"
-    read -e yesno
+#    echo "Would you like to install WordPress with the jumpstart theme? (y/n)"
+#    read -e yesno
     
     # Install WordPress
     if [ "$yesno" == y ] ; then
@@ -373,8 +379,8 @@ if [[ $ping_result == "Connected" ]]; then
         wpuser="admin"
         pass="password"
         admin_email="admin@local.dev"
-        echo "Add a comma separated list of pages that you want in your site:"
-        read -e allpages
+#        echo "Add a comma separated list of pages that you want in your site:"
+#        read -e allpages
         dbname="wordpress_default"
         dbname="wp"
         dbpass="wp"
