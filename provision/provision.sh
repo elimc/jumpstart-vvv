@@ -415,8 +415,12 @@ PHP
             echo "Finished npm install :)"
 
             # Set up path for Browsersync.
-            sed -i ".bak" "s#127.0.0.1/jump_start#local.wordpress.dev#" gulpfile.js; # Search and replace inside gulpfile.js for the correct URL
+            # Search and replace inside gulpfile.js for the correct URL
+            # The sed -i ".bak" option (where we edit files in place), doesn't seem to work on Ubuntu.
             echo "Changing URL path to http://local.wordpress.dev"
+            sed "s#127.0.0.1/jump_start#local.wordpress.dev#" gulpfile.js > gulpfile2.js
+            rm gulpfile.js
+            mv gulpfile2.js gulpfile.js
         fi
     fi
 
