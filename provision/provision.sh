@@ -7,15 +7,15 @@
 # or `vagrant reload` are used. It provides all of the default packages and
 # configurations included with Varying Vagrant Vagrants.
 
-echo "Would you like to install WordPress with the jumpstart theme? (y/n)"
+sudo echo "Would you like to install WordPress with the jumpstart theme? (y/n)"
 #read -e yesno
-yesno="y"
+yesno="n"
 
-echo "Add a comma separated list of pages that you want in your site:"
+sudo echo "Add a comma separated list of pages that you want in your site:"
 #read -e allpages
 allpages="home"
 
-npmandgulp=y
+npmandgulp="n"
 
 # By storing the date now, we can calculate the duration of provisioning at the
 # end of this script.
