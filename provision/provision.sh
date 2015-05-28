@@ -388,7 +388,7 @@ while read hostfile; do
 done
 
 end_seconds="$(date +%s)"
-echo ""
+sudo echo ""
 echo "######################################################"
 echo "#"
 echo "# Provisioning complete in "$(expr $end_seconds - $start_seconds)" seconds"
@@ -402,9 +402,3 @@ echo "# Visit the site                  jumpstart.dev"
 echo "#"
 echo "######################################################"
 echo ""
-
-cd /srv/www/wordpress-default/wp-content/themes/jumpstart-master
-echo "You are in the following directory:"
-pwd
-echo "Changing directories to:"
-pwd
