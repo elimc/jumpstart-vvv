@@ -74,7 +74,7 @@ Vagrant.configure("2") do |config|
   # should be changed. If more than one VM is running through VirtualBox, including other
   # Vagrant machines, different subnets should be used for each.
   #
-  config.vm.network :private_network, ip: "192.168.50.4"
+  #config.vm.network :private_network, ip: "192.168.50.4"
 
   # Public Network (disabled)
   #
@@ -85,7 +85,7 @@ Vagrant.configure("2") do |config|
   #
   # Please see VVV and Vagrant documentation for additional details.
   #
-  # config.vm.network :public_network
+  config.vm.network :public_network
 
   # Port Forwarding (disabled)
   #
