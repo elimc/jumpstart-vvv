@@ -7,15 +7,7 @@
 # or `vagrant reload` are used. It provides all of the default packages and
 # configurations included with Varying Vagrant Vagrants.
 
-echo "Would you like to install WordPress with the jumpstart theme? (y/n)"
-sudo read -e yesno
-echo $yesno
 
-#sudo echo "Add a comma separated list of pages that you want in your site:"
-#read -e allpages
-#allpages="home"
-#
-#npmandgulp="y"
 
 # By storing the date now, we can calculate the duration of provisioning at the
 # end of this script.
@@ -388,7 +380,7 @@ while read hostfile; do
 done
 
 end_seconds="$(date +%s)"
-sudo echo ""
+echo ""
 echo "######################################################"
 echo "#"
 echo "# Provisioning complete in "$(expr $end_seconds - $start_seconds)" seconds"

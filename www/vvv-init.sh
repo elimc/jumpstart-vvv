@@ -19,13 +19,7 @@ js_pages="home" # Comma separated list of pages to be displayed on the site.
 js_github_theme="https://github.com/elimc/jumpstart/archive/master.zip"
 js_theme_folder="jumpstart-master"
 
-#sitename="jumpstart"
-#wpuser="admin"
-#pass="password"
-#admin_email="admin@local.dev"
-#dbname="jumpstart"
-#dbuser="wp"
-#dbpass="wp"
+
 
 echo "Commencing Default Site Setup"
 
