@@ -3,7 +3,7 @@
 jumpstart VVV is an open source configuration that is built to load the [jumpstart theme](https://github.com/elimc/jumpstart) for WordPress. For those who feel a VM is overkill for setting up the jumpstart theme, you may be interested in checking out the [jumpstart install script](https://github.com/elimc/jumpstart-install-script).
 
 ## Overview
-#### Latest Verstion: **0.1 Beta** (May 11, 2015)
+#### Latest Verstion: **0.2** (May 27, 2015)
 
 #### Why jumpstart VVV?
 
@@ -75,7 +75,7 @@ Now that you're up and running, start poking around and modifying things.
 
 The network configuration picks an IP of 192.168.50.4. It could cause conflicts on your existing network if you *are* on a 192.168.50.x subnet already. You can configure any IP address in the `Vagrantfile` and it will be used on the next `vagrant up`
 
-VVV relies on the stability of both Vagrant and Virtualbox. These caveats are common to Vagrant environments and are worth noting:
+jVVV relies on the stability of both Vagrant and Virtualbox. These caveats are common to Vagrant environments and are worth noting:
 * If the directory **jVVV** is inside of is moved once provisioned (`vagrant-local`), it may break.
     * If `vagrant destroy` is used before moving, this should be fine.
 * If Virtualbox is uninstalled, **jVVV** will break.
@@ -89,15 +89,13 @@ All database usernames and passwords for WordPress installations included by def
 
 All WordPress admin usernames and passwords for WordPress installations included by default are `admin` and `password`.
 
-#### WordPress Stable
-* LOCAL PATH: vagrant-local/www/wordpress-default
-* VM PATH: /srv/www/wordpress-default
-* URL: `http://local.wordpress.dev`
-* DB Name: `wordpress_default`
+#### Default jumpstart site
+* URL: `http://jumpstart.dev`
+* DB Name: `jumpstart`
 
 #### MySQL Root
-* User: `root`
-* Pass: `root`
+* User: `wp`
+* Pass: `wp`
 * See: [Connecting to MySQL](https://github.com/varying-vagrant-vagrants/vvv/wiki/Connecting-to-MySQL) from your local machine
 
 ### What do you get?
@@ -123,4 +121,5 @@ A bunch of stuff!
 
 ### The Future of jumpstart VVV
 
-Sooo many things ... Virtual Machines are a very active development area.
+* Get Gulp's browsersync to work with Vagrant.
+* Sooo many things ... Virtual Machines are a very active development area.
