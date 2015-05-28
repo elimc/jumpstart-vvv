@@ -114,10 +114,6 @@ PHP
     sed "s#127.0.0.1/jump_start#jumpstart.dev#" gulpfile.js > gulpfile2.js
     rm gulpfile.js
     mv gulpfile2.js gulpfile.js
-
-#	wp core config --dbname="jumpstart" --dbuser=wp --dbpass=wp --dbhost="localhost"
-#	wp core install --url=jumpstart.dev --title="jumpstart" --admin_user=admin --admin_password=password --admin_email=demo@example.com
-#	cd ..
 fi
 
 # The Vagrant site setup script will restart Nginx for us.
