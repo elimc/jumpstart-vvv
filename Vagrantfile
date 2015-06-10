@@ -85,7 +85,8 @@ Vagrant.configure("2") do |config|
   #
   # Please see VVV and Vagrant documentation for additional details.
   #
-  config.vm.network :public_network
+  #config.vm.network :public_network
+  config.vm.network "public_network", ip: "192.168.1.123"
 
   # Port Forwarding (disabled)
   #
