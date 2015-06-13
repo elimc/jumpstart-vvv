@@ -394,3 +394,6 @@ echo "# Visit the site                  jumpstart.dev"
 echo "#"
 echo "######################################################"
 echo ""
+
+# Swith to the theme
+cd www/htdocs/wp-content/themes/jumpstart-master

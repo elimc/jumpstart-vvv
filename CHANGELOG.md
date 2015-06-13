@@ -1,10 +1,10 @@
 **Changelog**
 =============
 
-### 0.2.1 (June 10, 2015)
+### 0.2.1 Beta (June 10, 2015)
 * Updated documentation
 
-### 0.2 (May 27, 2015)
+### 0.2 Beta (May 27, 2015)
 * jumpstart install finally working decent
 * Lots of cleaning in the provisioning
 * Fixes annoying std tty in error
